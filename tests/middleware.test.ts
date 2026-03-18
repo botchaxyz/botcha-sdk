@@ -46,7 +46,6 @@ describe("Express middleware", () => {
       })
     );
     const body = res.json.mock.calls[0][0];
-    expect(body.message).toContain(pk);
     expect(body.message).toContain("skill.md");
     expect(next).not.toHaveBeenCalled();
   });

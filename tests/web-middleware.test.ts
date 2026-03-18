@@ -34,7 +34,6 @@ describe("Web API protect()", () => {
       receipt_header: "x-botcha-receipt",
       skill_url: "https://api.botcha.xyz/skill.md",
     });
-    expect(body.message).toContain(pk);
     expect(body.message).toContain("skill.md");
   });
 

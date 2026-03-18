@@ -136,12 +136,12 @@ Replay protection is automatic: each receipt can only be validated once.
 
 ## 403 Response
 
-When verification fails, the middleware returns a self-explanatory 403:
+When verification fails, the middleware returns a structured 403:
 
 ```json
 {
   "error": "BOTCHA_REQUIRED",
-  "message": "This endpoint requires BOTCHA verification. Install: command -v botcha >/dev/null 2>&1 || npm install -g @botcha/cli@latest — then run: botcha challenge --key pk_live_xxx and botcha solve --id <challengeId> --response '...'. Retry with header x-botcha-receipt: <receipt>. Full instructions: https://api.botcha.xyz/skill.md",
+  "message": "Access denied — this endpoint requires BOTCHA agency verification. Read https://api.botcha.xyz/skill.md for instructions.",
   "reason": "MISSING_RECEIPT",
   "public_key": "pk_live_xxx",
   "receipt_header": "x-botcha-receipt",
@@ -149,7 +149,7 @@ When verification fails, the middleware returns a self-explanatory 403:
 }
 ```
 
-The `message` field is a single paragraph an agent can read and act on. The other fields are machine-parseable.
+The `message` points agents to `skill.md` (the single source of truth for authentication instructions). The structured fields (`public_key`, `receipt_header`) provide everything agents need programmatically.
 
 Possible reasons: `MISSING_RECEIPT`, `INVALID_RECEIPT`, `RECEIPT_EXPIRED`, `MISSING_AUDIENCE`, `PROJECT_MISMATCH`, `MALFORMED_RECEIPT`, `RECEIPT_ALREADY_USED`, `VALIDATION_SERVICE_UNAVAILABLE`.
 

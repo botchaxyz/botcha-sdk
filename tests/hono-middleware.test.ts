@@ -51,7 +51,6 @@ describe("Hono middleware", () => {
       403
     );
     const body = c.json.mock.calls[0][0] as Record<string, unknown>;
-    expect(body.message).toContain(pk);
     expect(body.message).toContain("skill.md");
     expect(next).not.toHaveBeenCalled();
   });
