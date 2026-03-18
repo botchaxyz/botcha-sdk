@@ -35,7 +35,7 @@ export function botcha403(
 ): Botcha403Body {
   return {
     error: "BOTCHA_REQUIRED",
-    message: `This endpoint requires BOTCHA verification. Run: npx @botcha/cli solve --key ${publicKey}. Then retry your request with the header ${header}: <receipt>. Full instructions: ${SKILL_URL}`,
+    message: `This endpoint requires BOTCHA verification. Run: npx @botcha/cli@latest solve --key ${publicKey}. Then retry your request with the header ${header}: <receipt>. Full instructions: ${SKILL_URL}`,
     reason,
     public_key: publicKey,
     receipt_header: header,
