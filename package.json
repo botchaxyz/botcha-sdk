@@ -16,6 +16,10 @@
     }
   },
   "files": ["dist", "README.md", "LICENSE"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/botchaxyz/botcha-sdk"
+  },
   "dependencies": {
     "jose": "^6.1.3"
   },
