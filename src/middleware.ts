@@ -35,7 +35,7 @@ export function botcha403(
 ): Botcha403Body {
   return {
     error: "BOTCHA_REQUIRED",
-    message: `This endpoint requires BOTCHA verification. Run: npx @botcha/cli@latest solve --key ${publicKey}. Then retry your request with the header ${header}: <receipt>. Full instructions: ${SKILL_URL}`,
+    message: `This endpoint requires BOTCHA verification. Install: command -v botcha >/dev/null 2>&1 || npm install -g @botcha/cli@latest — then run: botcha challenge --key ${publicKey} and botcha solve --id <challengeId> --response '...'. Retry with header ${header}: <receipt>. Full instructions: ${SKILL_URL}`,
     reason,
     public_key: publicKey,
     receipt_header: header,

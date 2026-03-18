@@ -71,7 +71,7 @@ When verification fails, the middleware returns a self-explanatory 403:
 ```json
 {
   "error": "BOTCHA_REQUIRED",
-  "message": "This endpoint requires BOTCHA verification. Install the botcha CLI (npx botcha) and run: botcha solve --key pk_live_xxx. Then retry ...",
+  "message": "This endpoint requires BOTCHA verification. Install: command -v botcha >/dev/null 2>&1 || npm install -g @botcha/cli@latest — then run: botcha challenge --key pk_live_xxx and botcha solve --id <challengeId> --response '...'. Retry with header x-botcha-receipt: <receipt>. Full instructions: https://api.botcha.xyz/skill.md",
   "reason": "MISSING_RECEIPT",
   "public_key": "pk_live_xxx",
   "receipt_header": "x-botcha-receipt",
