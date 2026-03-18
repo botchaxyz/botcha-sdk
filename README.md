@@ -41,6 +41,76 @@ app.post("/api/action", (c) => {
 });
 ```
 
+### Next.js (App Router)
+
+**Route Handler** — verify receipts directly in API routes:
+
+```typescript
+import { createBotcha } from "@botcha/sdk/next";
+
+const botcha = createBotcha({
+  secretKey: process.env.BOTCHA_SECRET_KEY!,
+  projectId: "your-project-id",
+});
+
+export async function POST(request: Request) {
+  const result = await botcha.protect(request, { publicKey: "pk_live_xxx" });
+  if (result instanceof Response) return result; // 403 or 500
+  // result.challengeId, result.projectId, result.fresh
+}
+```
+
+**Edge Middleware** — protect all routes matching a pattern:
+
+```typescript
+// middleware.ts
+import { createBotcha, CONTEXT_HEADER } from "@botcha/sdk/next";
+import { NextResponse } from "next/server";
+
+const botcha = createBotcha({ secretKey: process.env.BOTCHA_SECRET_KEY! });
+
+export async function middleware(request: Request) {
+  const result = await botcha.protect(request, { publicKey: "pk_live_xxx" });
+  if (result instanceof Response) return result;
+  // Forward context to route handlers
+  const headers = new Headers(request.headers);
+  headers.set(CONTEXT_HEADER, JSON.stringify(result));
+  return NextResponse.next({ request: { headers } });
+}
+
+export const config = { matcher: ["/api/protected/:path*"] };
+```
+
+Then in your route handler, read the forwarded context:
+
+```typescript
+import { getBotchaContext } from "@botcha/sdk/next";
+
+export async function POST(request: Request) {
+  const botcha = getBotchaContext(request);
+  if (!botcha) return Response.json({ error: "unauthorized" }, { status: 403 });
+  // botcha.challengeId, botcha.projectId, botcha.fresh
+}
+```
+
+> **Security:** `getBotchaContext()` trusts the `x-botcha-context` header. Only use it in routes protected by the BOTCHA middleware — otherwise an attacker could forge the header.
+
+### Web API (SvelteKit, Remix, Deno, etc.)
+
+The generic Web API adapter works with any framework that uses standard `Request`/`Response`:
+
+```typescript
+import { createBotcha } from "@botcha/sdk/web";
+
+const botcha = createBotcha({ secretKey: "sk_live_xxx" });
+
+export async function POST({ request }) {
+  const result = await botcha.protect(request, { publicKey: "pk_live_xxx" });
+  if (result instanceof Response) return result;
+  // result.challengeId, result.projectId, result.fresh
+}
+```
+
 ### Direct Verification
 
 ```typescript

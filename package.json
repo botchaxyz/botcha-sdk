@@ -13,6 +13,14 @@
     "./hono": {
       "types": "./dist/hono.d.ts",
       "default": "./dist/hono.js"
+    },
+    "./web": {
+      "types": "./dist/web.d.ts",
+      "default": "./dist/web.js"
+    },
+    "./next": {
+      "types": "./dist/next.d.ts",
+      "default": "./dist/next.js"
     }
   },
   "files": ["dist", "README.md", "LICENSE"],
