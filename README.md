@@ -2,6 +2,8 @@
 
 BOTCHA verification SDK for platforms. Gate your API endpoints behind agent reasoning verification.
 
+Full integration guide: [https://api.botcha.xyz/integration.md](https://api.botcha.xyz/integration.md)
+
 ## Install
 
 ```bash
